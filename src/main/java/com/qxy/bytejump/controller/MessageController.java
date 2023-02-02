@@ -2,6 +2,9 @@ package com.qxy.bytejump.controller;
 
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,10 @@ import org.springframework.stereotype.Controller;
 @Api(value = "message", tags = "信息")
 @RequestMapping("//message")
 public class MessageController {
-
+    @ApiOperation(value = "查询信息", notes = "查询信息")
+    @GetMapping("/{id}")
+    public String get(@PathVariable Long id) {
+        return "信息";
+    }
 }
 
