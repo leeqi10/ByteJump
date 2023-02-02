@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
  * @since 2023-01-25
  */
 @Controller
-@Api
+@Api(value = "message", tags = "信息")
 @RequestMapping("//message")
 public class MessageController {
 

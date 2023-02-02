@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
  * @since 2023-01-25
  */
 @Controller
-@Api
+@Api(value = "video", tags = "视频")
 @RequestMapping("//video")
 public class VideoController {
 

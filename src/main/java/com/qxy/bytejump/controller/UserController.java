@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
  * @since 2023-01-25
  */
 @Controller
-@Api
+@Api(value = "user", tags = "用户")
 @RequestMapping("//user")
 public class UserController {
 
