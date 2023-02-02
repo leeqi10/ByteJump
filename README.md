@@ -7,4 +7,4 @@
 ## 数据库
 数据库存放在data文件之中可以查看
 ## 问题
-目前问题swagger配置，不知道为什么，就是会No operations defined in spec!作者愚笨还请大神来帮我解决以下
+目前暂时没有问题
