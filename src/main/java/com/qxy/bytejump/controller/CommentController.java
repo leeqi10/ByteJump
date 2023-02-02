@@ -1,17 +1,10 @@
 package com.qxy.bytejump.controller;
-
-
-import com.qxy.bytejump.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.stereotype.Controller;
-
-import java.awt.*;
-
 /**
  * <p>
  *  前端控制器
