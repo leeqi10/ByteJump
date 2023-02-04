@@ -16,12 +16,22 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @Api(value = "user", tags = "用户")
-@RequestMapping("//user")
+@RequestMapping("//douyin")
 public class UserController {
-    @ApiOperation(value = "查询用户", notes = "查询用户")
-    @GetMapping("/{id}")
-    public String get(@PathVariable Long id) {
-        return "用户";
+    @ApiOperation(value = "用户注册", notes = "用户注册")
+    @GetMapping("/user/register")
+    public String userRegister( Long id) {
+        return "用户注册";
+    }
+    @ApiOperation(value = "用户登录", notes = "用户登录")
+    @GetMapping("/user/login")
+    public String userLogin(Long id) {
+        return "用户登录";
+    }
+    @ApiOperation(value = "用户信息", notes = "用户信息")
+    @GetMapping("/user/")
+    public String user( Long id) {
+        return "用户信息";
     }
 }
 

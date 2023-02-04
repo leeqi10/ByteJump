@@ -69,8 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").anonymous()
                 .antMatchers("/index.html").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated();
-                //.anyRequest().anonymous();
+                //.anyRequest().authenticated()
+                //允许用户匿名访问
+                .anyRequest().anonymous();
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //允许跨越
