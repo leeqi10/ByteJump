@@ -1,4 +1,4 @@
-package com.qxy.bytejump.vo;
+package com.qxy.bytejump.entity.vo;
 /**
  * @author lingqu
  * @date 2022/3/1
@@ -29,22 +29,25 @@ import java.util.List;
 public class LoginUser implements UserDetails {
     private User user;
     private List<String> permissions;
+
     public LoginUser(User user, List<String> permissions) {
         this.user = user;
         this.permissions = permissions;
     }
+    public LoginUser(User user) {
+        this.user=user;
+    }
+
     @JSONField(serialize = false)
     public List<SimpleGrantedAuthority> permissionList;
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         //将permissions的字符传入SimpleGrantedAuthority
         permissionList = new ArrayList<>();
-        for (String permission : permissions) {
-            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(permission);
-            permissionList.add(simpleGrantedAuthority);
-        }
-
         //使用函数式
         //List<SimpleGrantedAuthority> permissionList = permissions.stream()
         //        .map(SimpleGrantedAuthority::new)

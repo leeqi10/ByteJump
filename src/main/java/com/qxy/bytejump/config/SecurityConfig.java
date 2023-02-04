@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/error")
                 .antMatchers("/csrf")
                 .antMatchers("/favicon.ico")
-                .antMatchers("/user/login");
+                .antMatchers("/douyin/user/login");
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -68,10 +68,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/").anonymous()
                 .antMatchers("/index.html").anonymous()
+                .antMatchers("/douyin/user/register").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
-                //.anyRequest().authenticated()
+                .anyRequest().authenticated();
                 //允许用户匿名访问
-                .anyRequest().anonymous();
+                //.anyRequest().anonymous();
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //允许跨越

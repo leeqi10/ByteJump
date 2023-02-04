@@ -2,6 +2,7 @@ package com.qxy.bytejump.service;
 
 import com.qxy.bytejump.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qxy.bytejump.entity.vo.Result;
 
 /**
  * <p>
@@ -12,5 +13,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-01-25
  */
 public interface UserService extends IService<User> {
+    /**
+     *
+     * @param user
+     * @return
+     * @apiNote 注册
+     */
+    Result register(User user);
 
+    /**
+     *
+     * @param user
+     * @return
+     * @apiNote 登录
+     */
+    Result login(User user);
+
+    Result user(User user);
 }

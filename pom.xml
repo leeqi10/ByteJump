@@ -64,18 +64,18 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.3.1</version>
-        </dependency>
-      <!--  自动生成工具-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.3.2</version>
+            <version>3.4.2</version>
         </dependency>
        <!-- 数据库驱动器依赖-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!--  mybatis依赖项-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.4.2</version>
         </dependency>
      <!--   swagger配置-->
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
@@ -89,6 +89,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
+        </dependency>
+        <!--  自动生成工具-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.3.2</version>
         </dependency>
         <!-- 代码生成模板-->
         <dependency>
@@ -110,12 +116,6 @@
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
             <version>3.4.1.Final</version>
-        </dependency>
-      <!--  mybatis依赖项-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-extension</artifactId>
-            <version>3.4.3.1</version>
         </dependency>
     </dependencies>
     <build>

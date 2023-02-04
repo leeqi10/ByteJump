@@ -1,9 +1,11 @@
 package com.qxy.bytejump.controller;
+import com.qxy.bytejump.entity.User;
+import com.qxy.bytejump.entity.vo.Result;
+import com.qxy.bytejump.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -14,24 +16,29 @@ import org.springframework.stereotype.Controller;
  * @author leeqi10
  * @since 2023-01-25
  */
-@Controller
+@RestController
 @Api(value = "user", tags = "用户")
 @RequestMapping("//douyin")
 public class UserController {
+    @Autowired
+    private UserService userService;
+
     @ApiOperation(value = "用户注册", notes = "用户注册")
-    @GetMapping("/user/register")
-    public String userRegister( Long id) {
-        return "用户注册";
+    @PostMapping("/user/register")
+    public Result userRegister(@RequestBody User user) {
+        return userService.register(user);
     }
+
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    @GetMapping("/user/login")
-    public String userLogin(Long id) {
-        return "用户登录";
+    @PostMapping("/user/login")
+    public Result userLogin(@RequestBody  User user) {
+        return userService.login(user);
     }
+
     @ApiOperation(value = "用户信息", notes = "用户信息")
-    @GetMapping("/user/")
-    public String user( Long id) {
-        return "用户信息";
+    @PostMapping("/user/")
+    public Result user( @RequestBody  User user) {
+        return userService.user(user);
     }
 }
 
