@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private String name;
+    private String username;
 
     private Integer followCount;
 
@@ -38,5 +38,8 @@ import lombok.NoArgsConstructor;
 
     private String password;
 
-
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
 }

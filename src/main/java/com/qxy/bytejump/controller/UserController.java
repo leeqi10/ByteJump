@@ -1,5 +1,6 @@
 package com.qxy.bytejump.controller;
 import com.qxy.bytejump.entity.User;
+import com.qxy.bytejump.entity.response.UserLR;
 import com.qxy.bytejump.entity.vo.Result;
 import com.qxy.bytejump.service.UserService;
 import io.swagger.annotations.Api;
@@ -25,13 +26,13 @@ public class UserController {
 
     @ApiOperation(value = "用户注册", notes = "用户注册")
     @PostMapping("/user/register")
-    public Result userRegister(@RequestBody User user) {
+    public UserLR userRegister(User user) {
         return userService.register(user);
     }
 
     @ApiOperation(value = "用户登录", notes = "用户登录")
     @PostMapping("/user/login")
-    public Result userLogin(@RequestBody  User user) {
+    public UserLR userLogin(User user) {
         return userService.login(user);
     }
 

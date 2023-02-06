@@ -2,6 +2,7 @@ package com.qxy.bytejump.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.qxy.bytejump.entity.User;
+import com.qxy.bytejump.entity.response.UserLR;
 import com.qxy.bytejump.entity.vo.LoginUser;
 import com.qxy.bytejump.entity.vo.Result;
 import com.qxy.bytejump.mapper.UserMapper;
@@ -40,14 +41,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private RedisCache redisCache;
     @Override
-    public Result register(User user) {
+    public UserLR register(User user) {
 
         //判断用户名是否已经存在了
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getName, user.getName());
+        queryWrapper.eq(User::getUsername, user.getUsername());
         User hasUser = userMapper.selectOne(queryWrapper);
         if (!Objects.isNull(hasUser)){
-            return new Result(403,"注册失败，该用户已存在");
+            return new UserLR(403,"注册失败，该用户已存在");
         }
 
         //加密密码
@@ -62,13 +63,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Map<String,String> map = new HashMap<String,String>();
         map.put("user_id",userId);
         map.put("token", jwt);
-        return new Result(200,"注册成功", map);
+        return new UserLR(200,"注册成功",Integer.parseInt(userId),jwt);
     }
 
     @Override
-    public Result login(User user) {
+    public UserLR login(User user) {
         //使用Authentication authenticate认证
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getName(),user.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
         //登录失败，给出相应提示
@@ -85,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         map.put("token", jwt);
         //把完整用户信息保存到redis
         redisCache.setCacheObject("login:"+userId, loginUser,1, TimeUnit.HOURS);
-        return new Result(200,"登录成功", map);
+        return new UserLR(200,"登录成功",Integer.parseInt(userId),jwt);
     }
 
     @Override

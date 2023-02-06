@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         //查询用户信息
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getName,username);
+        queryWrapper.eq(User::getUsername,username);
         User user = userManager.selectOne(queryWrapper);
 
 
