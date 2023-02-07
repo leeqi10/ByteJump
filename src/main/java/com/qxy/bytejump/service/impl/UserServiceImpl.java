@@ -58,12 +58,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.insert(user);
 
         //生成token
+        LoginUser loginUser = new LoginUser(user);
         String userId = user.getId().toString();
         String jwt = JwtUtil.createJWT(userId);
         Map<String,String> map = new HashMap<String,String>();
         map.put("user_id",userId);
         map.put("token", jwt);
-        return new UserLR(200,"注册成功",Integer.parseInt(userId),jwt);
+        redisCache.setCacheObject("login:"+userId, loginUser,1, TimeUnit.HOURS);
+        return new UserLR(0,"注册成功",Integer.parseInt(userId),jwt);
     }
 
     @Override
@@ -71,12 +73,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //使用Authentication authenticate认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-
         //登录失败，给出相应提示
         if(Objects.isNull(authenticate)){
             throw new RuntimeException("登录失败");
         }
-
         //如果登录成功 生成jwt
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
@@ -86,7 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         map.put("token", jwt);
         //把完整用户信息保存到redis
         redisCache.setCacheObject("login:"+userId, loginUser,1, TimeUnit.HOURS);
-        return new UserLR(200,"登录成功",Integer.parseInt(userId),jwt);
+        return new UserLR(0,"登录成功",Integer.parseInt(userId),jwt);
     }
 
     @Override

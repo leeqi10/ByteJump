@@ -5,9 +5,10 @@ package com.qxy.bytejump.filter;/**
  */
 
 import com.qxy.bytejump.entity.User;
+import com.qxy.bytejump.entity.vo.LoginUser;
 import com.qxy.bytejump.utils.JwtUtil;
 import com.qxy.bytejump.utils.RedisCache;
-import com.qxy.bytejump.vo.LoginUser;
+
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,10 +37,18 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private RedisCache redisCache;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         //获取token
-        String token = request.getHeader("token");
-        if (!StringUtils.hasText(token)) {
+        String token = request.getParameter("token");
+        if(request.getRequestURL().toString().endsWith("login/")){
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if(request.getRequestURL().toString().endsWith("register/")){
+            filterChain.doFilter(request, response);
+            return;
+        }
+        if(request.getRequestURL().toString().endsWith("feed")){
             filterChain.doFilter(request, response);
             return;
         }
@@ -62,10 +71,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         //存入SecurityContextHolder
         //TODO 获取权限信息
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
+
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
-        filterChain.doFilter(request, response);
+        try {
+            filterChain.doFilter(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 }

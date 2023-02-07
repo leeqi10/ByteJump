@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *@description TODO
@@ -47,11 +48,11 @@ public class LoginUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         //将permissions的字符传入SimpleGrantedAuthority
-        permissionList = new ArrayList<>();
+       /* permissionList = new ArrayList<>();*/
         //使用函数式
-        //List<SimpleGrantedAuthority> permissionList = permissions.stream()
-        //        .map(SimpleGrantedAuthority::new)
-        //        .collect(Collectors.toList());
+        List<SimpleGrantedAuthority> permissionList = permissions.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
         return permissionList;
     }
 
