@@ -50,9 +50,14 @@ public class LoginUser implements UserDetails {
         //将permissions的字符传入SimpleGrantedAuthority
        /* permissionList = new ArrayList<>();*/
         //使用函数式
-        List<SimpleGrantedAuthority> permissionList = permissions.stream()
+      /*  List<SimpleGrantedAuthority> permissionList = permissions.stream()
                 .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+        permissionList = new ArrayList<>();
+        for (String permission : permissions) {
+            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(permission);
+            permissionList.add(simpleGrantedAuthority);
+        }
         return permissionList;
     }
 

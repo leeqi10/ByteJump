@@ -72,9 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/douyin/user/register/").permitAll()
                 .antMatchers("/douyin/feed").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated();
+                //.anyRequest().authenticated();
                 //允许用户匿名访问
-                //.anyRequest().anonymous();
+                .anyRequest().permitAll();
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //允许跨越

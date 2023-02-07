@@ -1,10 +1,12 @@
 package com.qxy.bytejump.controller;
 import com.qxy.bytejump.entity.User;
 import com.qxy.bytejump.entity.response.UserLR;
+import com.qxy.bytejump.entity.vo.ResponseUser;
 import com.qxy.bytejump.entity.vo.Result;
 import com.qxy.bytejump.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -37,9 +39,9 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户信息", notes = "用户信息")
-    @PostMapping("/user/")
-    public Result user( @RequestBody  User user) {
-        return userService.user(user);
+    @GetMapping("/user/")
+    public ResponseUser user(@Param("user_id") String user_id, @Param("token") String token) {
+        return userService.getUser(user_id,token);
     }
 }
 

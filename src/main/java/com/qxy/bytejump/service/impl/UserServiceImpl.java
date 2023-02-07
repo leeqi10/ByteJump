@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.qxy.bytejump.entity.User;
 import com.qxy.bytejump.entity.response.UserLR;
 import com.qxy.bytejump.entity.vo.LoginUser;
+import com.qxy.bytejump.entity.vo.ResponseUser;
 import com.qxy.bytejump.entity.vo.Result;
 import com.qxy.bytejump.mapper.UserMapper;
 import com.qxy.bytejump.service.UserService;
@@ -18,9 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -56,9 +55,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String passwordEncoder = ps.encode(user.getPassword());
         user.setPassword(passwordEncoder);
         userMapper.insert(user);
-
+        //添加权限
+        List<String> list = new ArrayList<>();
+        list.add("list");
+        LoginUser loginUser = new LoginUser(user,list);
         //生成token
-        LoginUser loginUser = new LoginUser(user);
         String userId = user.getId().toString();
         String jwt = JwtUtil.createJWT(userId);
         Map<String,String> map = new HashMap<String,String>();
@@ -90,7 +91,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result user(User user) {
-        return new Result(200,"登录成功");
+    public ResponseUser getUser(String user_id, String token) {
+        User user = userMapper.selectById(user_id);
+        System.out.println(user);
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("id",user_id);
+        map.put("name",user.getUsername());
+        map.put("follow_count",String.valueOf(user.getFollowCount()));
+        map.put("follower_count",String.valueOf(user.getFollowerCount()));
+        map.put("is_follow",String.valueOf(user.getIsFollow()));
+        ResponseUser<Map> responseUser = new ResponseUser<Map>(0,"查询成功",map);
+        return responseUser;
     }
+
+
 }

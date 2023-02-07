@@ -21,24 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("//douyin")
 public class VideoController {
     @ApiOperation(value = "查询视频", notes = "查询视频")
-    @GetMapping("/user")
-    @ResponseBody
-    public String get(@Param("user_id") String user_id,@Param("token")  String token) {
-        System.out.println(user_id);
-        System.out.println(token);
-        return "{\n" +
-                "    \"status_code\": 0,\n" +
-                "    \"status_msg\": \"string\",\n" +
-                "    \"user\": {\n" +
-                "        \"id\": 4,\n" +
-                "        \"name\": \"tqq\",\n" +
-                "        \"follow_count\": 0,\n" +
-                "        \"follower_count\": 0,\n" +
-                "        \"is_follow\": true\n" +
-                "    }\n" +
-                "}";
-    }
-    @ApiOperation(value = "查询视频", notes = "查询视频")
     @GetMapping("/feed")
     @ResponseBody
     public String getFeed(@Param("latest_time") String latest_time,@Param("token")  String token) {
