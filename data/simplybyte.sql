@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 06/02/2023 15:08:21
+ Date: 07/02/2023 17:00:52
 */
 
 SET NAMES utf8mb4;
@@ -54,20 +54,23 @@ CREATE TABLE `message`  (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `follow_count` int NULL DEFAULT NULL,
-  `follower_count` int NULL DEFAULT NULL,
-  `is_follow` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `follow_count` int UNSIGNED NOT NULL DEFAULT 0,
+  `follower_count` int UNSIGNED NOT NULL DEFAULT 0,
+  `is_follow` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
   `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'TQ', NULL, NULL, NULL, '$2a$10$BYoaSw87gyLdL677K0RpJOG1yPiG7CBkZ5GWL6J3YS4dt776xkrdq');
-INSERT INTO `user` VALUES (2, '45', NULL, NULL, NULL, '$2a$10$PRy8wNfUmjsfK9Q32.3Xe.TJ3b4WBHjGeAveF56wc43F4o5uuM2t.');
-INSERT INTO `user` VALUES (3, 'TT', NULL, NULL, NULL, '$2a$10$8JOX5C4ecxwNl/lwHoFhNeIDPyZ9d2M0cQ7C6Ou4Ge99Gf3EstxfW');
+INSERT INTO `user` VALUES (10, 'nii', 0, 0, '0', '$2a$10$KvO5HkeeIqKmQH2QkiDCReuefBMQBi39G0FbbfOJ7qy4waO6eOUem');
+INSERT INTO `user` VALUES (11, 'tqq', 0, 0, '0', '$2a$10$EPKFBLJLTNckRIG7zQSGsO5gsnb0.k3fS77uKR3FDhhHAh/uBH9LK');
+INSERT INTO `user` VALUES (12, 'tq', 0, 0, '0', '$2a$10$trbEYRKC34ENbUZDI39li.tIsRvMDM18SG7mzCenGR4pmS22lHH.C');
+INSERT INTO `user` VALUES (13, 't', 0, 0, '0', '$2a$10$DLs385E/R6G5fX28iw8xfOQ8Bg8vlotnJd4UXIiUGIdhratmx3piG');
+INSERT INTO `user` VALUES (14, 'tnnn', 0, 0, '0', '$2a$10$03mhUUlX8.UakXrLt9vcQO93JrvDVAPkcg6xDChgXPFpZQ0sVT90i');
+INSERT INTO `user` VALUES (15, 'djdj', 0, 0, '0', '$2a$10$RqfnvSeq2F18yTGbRiZbSuJgNZC2k2DrzzEXkuK05T1BvnMcZ6UN2');
 
 -- ----------------------------
 -- Table structure for video
