@@ -38,14 +38,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         queryWrapper.eq(User::getUsername,username);
         User user = userManager.selectOne(queryWrapper);
 
-
         if (Objects.isNull(user)){
             throw new RuntimeException("用户名不存在");
         }
 
         //TODO 权限查询
         List<String> list = new ArrayList<>();
-        list.add("list");
+        list.add("任何权限");
         //封装为UserDetails
         return new LoginUser(user,list);
     }

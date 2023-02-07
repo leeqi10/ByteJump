@@ -41,7 +41,7 @@ public class VideoController {
     @ApiOperation(value = "查询视频", notes = "查询视频")
     @GetMapping("/feed")
     @ResponseBody
-    public String Feed(@Param("latest_time") String latest_time,@Param("token")  String token) {
+    public String getFeed(@Param("latest_time") String latest_time,@Param("token")  String token) {
         System.out.println(latest_time);
         System.out.println(token);
         return "{\n" +

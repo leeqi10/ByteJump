@@ -40,15 +40,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         //获取token
         String token = request.getParameter("token");
-        if(request.getRequestURL().toString().endsWith("login/")){
-            filterChain.doFilter(request, response);
-            return;
-        }
-        if(request.getRequestURL().toString().endsWith("register/")){
-            filterChain.doFilter(request, response);
-            return;
-        }
-        if(request.getRequestURL().toString().endsWith("feed")){
+        if (!StringUtils.hasText(token)) {
             filterChain.doFilter(request, response);
             return;
         }

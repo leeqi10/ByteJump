@@ -75,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         //登录失败，给出相应提示
         if(Objects.isNull(authenticate)){
-            throw new RuntimeException("登录失败");
+            throw new RuntimeException("登录失败没有足够的权限");
         }
         //如果登录成功 生成jwt
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
