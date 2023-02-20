@@ -52,8 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/Pio/**")
                 .antMatchers("/error")
                 .antMatchers("/csrf")
-                .antMatchers("/favicon.ico")
-                .antMatchers("/douyin/user/login/");
+                .antMatchers("/favicon.ico");
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {

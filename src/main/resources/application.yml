@@ -1,9 +1,15 @@
 #mybatis-plus配置
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
+  mapper-locations: classpath*:com/qxy/bytejump/mapper/**/*.xml
 server:
   port: 8084
 spring:
+  #文件大小设置
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 500MB
+  #数据库资源设置
   datasource:
     url: jdbc:mysql://localhost:3306/simplybyte?characterEncoding=utf-8&serverTimezone=UTC
     username: root
@@ -32,3 +38,4 @@ spring:
         min-idle: 0
         # 从连接池中获取连接最大等待时间（默认为-1，单位为毫秒，负数表示无限）
         max-wait: -1
+

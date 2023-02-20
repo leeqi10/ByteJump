@@ -1,12 +1,15 @@
 package com.qxy.bytejump.controller;
+import com.qxy.bytejump.entity.vo.Result;
+import com.qxy.bytejump.service.VideoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /**
  * <p>
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Api(value = "video", tags = "视频")
 @RequestMapping("//douyin")
 public class VideoController {
+    @Autowired
+    private VideoService videoService;
     @ApiOperation(value = "查询视频", notes = "查询视频")
     @GetMapping("/feed")
     @ResponseBody
@@ -49,6 +54,13 @@ public class VideoController {
                 "        }\n" +
                 "    ]\n" +
                 "}";
+    }
+    @ApiOperation(value = "投稿视频", notes = "投稿视频")
+    @PostMapping("/publish/action/")
+    @ResponseBody
+    public Result setUpload(@Param("data") MultipartFile data, @Param("token")String token, @Param("title")String title){
+        return videoService.Upload(data,token,title);
+
     }
 }
 
