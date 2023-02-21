@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,8 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     private UserMapper userMapper;
     @Override
     public Result Upload(MultipartFile file, String token, String title) {
+        //存放主要的路由地址
+        String routing="http://192.168.32.184:8084/";
         //存放的文件路径
         String filePath = "";
         //真实文件路径
@@ -76,12 +79,12 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
             e.printStackTrace();
         }
         //地址路径
-        String path="http://192.168.1.184:8084/"+realPath+"/"+filePath;
+        String path=routing+realPath+"/"+filePath;
         //设置username
         User user = userMapper.selectById(userId);
         String userName=user.getUsername();
         //设置cover路径
-        String pathImage= VideoCoverUtils.getImageAddress(userId,fileName,1);
+        String pathImage= VideoCoverUtils.getImageAddress(routing,userId,fileName,1);
         //插入数据库
         videoMapper.insertFile(path,userName,pathImage,title);
         //返回数据设置
@@ -113,7 +116,32 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
              ) {
             userVideo.setAuthor(user);
         }
-        RePUserVideo rePUserVideo = new RePUserVideo(0,"成功",userVideos);
+        RePUserVideo rePUserVideo = new RePUserVideo(0,"查询成功",userVideos);
+        return rePUserVideo;
+    }
+
+    @Override
+    public RePUserVideo selectAllVideo(String lastTime, String token) {
+        //查询所有视频
+        List<VideoPlus> videos = videoMapper.selectAllVideo();
+        //查询所有用户
+        List<User> users = userMapper.selectAllUser();
+        //时间戳
+        String time = VideoCoverUtils.getSecondTimestamp(new Date());
+        //实现每个视频关联自己的用户
+        //遍历每一个视频
+        for (VideoPlus userVideo:videos
+             ) {
+            //遍历每一个用户
+            for (User user:users
+                 ) {
+                if (userVideo.getUserName().equals(user.getUsername())){
+                    userVideo.setAuthor(user);
+                }
+            }
+        }
+        System.out.println(videos);
+        RePUserVideo rePUserVideo = new RePUserVideo(0,"成功",time,videos);
         return rePUserVideo;
     }
 }

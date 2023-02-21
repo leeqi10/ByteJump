@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,11 +47,11 @@ public class VideoCoverUtils {
      * @param:
      * @return: void
      */
-    public static Map<String, Object> getVedioImg(String filePath, String fileName) {
+    public static Map<String, Object> getVideoImg(String filePath, String fileName) {
         return getImage(filePath, fileName, 1);
     }
 
-    public   static String getImageAddress(String filePath, String fileName, int second) {
+    public   static String getImageAddress(String routing,String filePath, String fileName, int second) {
         File folder = new File("video"+"/"+filePath);
         if (!folder.exists()) {
             folder.mkdirs();//如果文件夹不存在则创建
@@ -85,7 +86,7 @@ public class VideoCoverUtils {
             String newFileName = "Cover/"+filePath+ "/" + fileName.substring(0, fileName.lastIndexOf(".")) + ".png";
             File file = new File(newFileName);
             ImageIO.write(bufferedImage, "jpeg", file);
-            return "http://192.168.1.184:8084/"+newFileName;
+            return routing+newFileName;
         } catch (FFmpegFrameGrabber.Exception e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -188,4 +189,21 @@ public class VideoCoverUtils {
         int des_height = src.height + len_height * 2;
         return new Rectangle(new Dimension(des_width, des_height));
     }
+    /**
+     * 获取精确到秒的时间戳
+     * @return
+     */
+    public static String getSecondTimestamp(Date date){
+        if (null == date) {
+            return "0";
+        }
+        String timestamp = String.valueOf(date.getTime());
+        int length = timestamp.length();
+        if (length > 3) {
+            return timestamp.substring(0,length-3);
+        } else {
+            return "0";
+        }
+    }
+
 }

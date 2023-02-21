@@ -84,4 +84,5 @@ public class VideoPlus {
         this.isFavorite = isFavorite;
         this.title = title;
     }
+
 }

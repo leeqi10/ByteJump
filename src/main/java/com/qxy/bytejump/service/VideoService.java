@@ -19,4 +19,6 @@ public interface VideoService extends IService<Video> {
 
     RePUserVideo selectAllUserVideo(String token, String userId);
 
+    RePUserVideo selectAllVideo(String lastTime,String token);
+
 }
