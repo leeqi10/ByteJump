@@ -2,6 +2,7 @@ package com.qxy.bytejump.service;
 
 import com.qxy.bytejump.entity.Video;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qxy.bytejump.entity.response.RePUserVideo;
 import com.qxy.bytejump.entity.vo.Result;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,5 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface VideoService extends IService<Video> {
     Result Upload(MultipartFile file, String token, String title);
+
+    RePUserVideo selectAllUserVideo(String token, String userId);
 
 }

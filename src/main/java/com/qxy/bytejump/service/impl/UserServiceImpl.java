@@ -65,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Map<String,String> map = new HashMap<String,String>();
         map.put("user_id",userId);
         map.put("token", jwt);
-        redisCache.setCacheObject("login:"+userId, loginUser,1, TimeUnit.HOURS);
+        redisCache.setCacheObject("login:"+userId, loginUser,100, TimeUnit.HOURS);
         return new UserLR(0,"注册成功",Integer.parseInt(userId),jwt);
     }
 
@@ -86,14 +86,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         map.put("user_id",userId);
         map.put("token", jwt);
         //把完整用户信息保存到redis
-        redisCache.setCacheObject("login:"+userId, loginUser,1, TimeUnit.HOURS);
+        redisCache.setCacheObject("login:"+userId, loginUser,100, TimeUnit.HOURS);
         return new UserLR(0,"登录成功",Integer.parseInt(userId),jwt);
     }
 
     @Override
     public ResponseUser getUser(String user_id, String token) {
         User user = userMapper.selectById(user_id);
-        System.out.println(user);
         Map<String,String> map = new HashMap<String,String>();
         map.put("id",user_id);
         map.put("name",user.getUsername());

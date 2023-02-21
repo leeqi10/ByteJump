@@ -2,20 +2,22 @@ package com.qxy.bytejump.service.impl;
 
 import com.qxy.bytejump.entity.User;
 import com.qxy.bytejump.entity.Video;
+import com.qxy.bytejump.entity.response.RePUserVideo;
 import com.qxy.bytejump.entity.vo.Result;
+import com.qxy.bytejump.entity.vo.VideoPlus;
 import com.qxy.bytejump.mapper.UserMapper;
 import com.qxy.bytejump.mapper.VideoMapper;
 import com.qxy.bytejump.service.VideoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qxy.bytejump.utils.JwtUtil;
+import com.qxy.bytejump.utils.VideoCoverUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * <p>
@@ -74,15 +76,44 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
             e.printStackTrace();
         }
         //地址路径
-        String path="http://localhost:8084/"+realPath+"/"+filePath;
-        System.out.println(path);
+        String path="http://192.168.1.184:8084/"+realPath+"/"+filePath;
         //设置username
         User user = userMapper.selectById(userId);
         String userName=user.getUsername();
+        //设置cover路径
+        String pathImage= VideoCoverUtils.getImageAddress(userId,fileName,1);
         //插入数据库
-        videoMapper.insertFile(path,userName);
+        videoMapper.insertFile(path,userName,pathImage,title);
         //返回数据设置
         Result result = new Result(0,"发布成功");
         return result;
+    }
+
+    @Override
+    public RePUserVideo selectAllUserVideo(String token, String userId) {
+        //可以根据token和userid是否相等进行验证，来提高安全性和隐私性
+      /**
+        Claims claims=null;
+        String userId1;
+        try {
+            claims = JwtUtil.parseJWT(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        userId1 = claims.getSubject();
+        */
+      //查询该用户信息
+      User user=userMapper.selectById(userId);
+      //查询用户的名字
+      String userName = user.getUsername();
+      //查询用户信息的所有视频
+      List<VideoPlus> userVideos = videoMapper.selectAllVideoByUserName(userName);
+        System.out.println(userVideos);
+        for (VideoPlus userVideo:userVideos
+             ) {
+            userVideo.setAuthor(user);
+        }
+        RePUserVideo rePUserVideo = new RePUserVideo(0,"成功",userVideos);
+        return rePUserVideo;
     }
 }

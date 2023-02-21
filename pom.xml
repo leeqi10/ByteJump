@@ -117,6 +117,22 @@
             <artifactId>jboss-logging</artifactId>
             <version>3.4.1.Final</version>
         </dependency>
+        <!--计算机视觉领域的封装库 -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+            <version>1.5.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.5.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>ffmpeg-platform</artifactId>
+            <version>5.0-1.5.7</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

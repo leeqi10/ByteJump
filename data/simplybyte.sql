@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 07/02/2023 17:00:52
+ Date: 21/02/2023 19:31:55
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `comment`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `create_data` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
@@ -42,7 +42,7 @@ CREATE TABLE `message`  (
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `create_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of message
@@ -57,20 +57,22 @@ CREATE TABLE `user`  (
   `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `follow_count` int UNSIGNED NOT NULL DEFAULT 0,
   `follower_count` int UNSIGNED NOT NULL DEFAULT 0,
-  `is_follow` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
+  `is_follow` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'false',
   `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (10, 'nii', 0, 0, '0', '$2a$10$KvO5HkeeIqKmQH2QkiDCReuefBMQBi39G0FbbfOJ7qy4waO6eOUem');
-INSERT INTO `user` VALUES (11, 'tqq', 0, 0, '0', '$2a$10$EPKFBLJLTNckRIG7zQSGsO5gsnb0.k3fS77uKR3FDhhHAh/uBH9LK');
-INSERT INTO `user` VALUES (12, 'tq', 0, 0, '0', '$2a$10$trbEYRKC34ENbUZDI39li.tIsRvMDM18SG7mzCenGR4pmS22lHH.C');
-INSERT INTO `user` VALUES (13, 't', 0, 0, '0', '$2a$10$DLs385E/R6G5fX28iw8xfOQ8Bg8vlotnJd4UXIiUGIdhratmx3piG');
-INSERT INTO `user` VALUES (14, 'tnnn', 0, 0, '0', '$2a$10$03mhUUlX8.UakXrLt9vcQO93JrvDVAPkcg6xDChgXPFpZQ0sVT90i');
-INSERT INTO `user` VALUES (15, 'djdj', 0, 0, '0', '$2a$10$RqfnvSeq2F18yTGbRiZbSuJgNZC2k2DrzzEXkuK05T1BvnMcZ6UN2');
+INSERT INTO `user` VALUES (10, 'nii', 0, 0, 'false', '$2a$10$KvO5HkeeIqKmQH2QkiDCReuefBMQBi39G0FbbfOJ7qy4waO6eOUem');
+INSERT INTO `user` VALUES (11, 'tqq', 0, 0, 'false', '$2a$10$EPKFBLJLTNckRIG7zQSGsO5gsnb0.k3fS77uKR3FDhhHAh/uBH9LK');
+INSERT INTO `user` VALUES (12, 'tq', 0, 0, 'false', '$2a$10$trbEYRKC34ENbUZDI39li.tIsRvMDM18SG7mzCenGR4pmS22lHH.C');
+INSERT INTO `user` VALUES (13, 't', 0, 0, 'false', '$2a$10$DLs385E/R6G5fX28iw8xfOQ8Bg8vlotnJd4UXIiUGIdhratmx3piG');
+INSERT INTO `user` VALUES (14, 'tnnn', 0, 0, 'false', '$2a$10$03mhUUlX8.UakXrLt9vcQO93JrvDVAPkcg6xDChgXPFpZQ0sVT90i');
+INSERT INTO `user` VALUES (15, 'djdj', 0, 0, 'false', '$2a$10$RqfnvSeq2F18yTGbRiZbSuJgNZC2k2DrzzEXkuK05T1BvnMcZ6UN2');
+INSERT INTO `user` VALUES (16, 'tqq1', 0, 0, 'false', '$2a$10$hbYROhU9QvslRVrxqN/EWOXS9nygu060YFjYArDG1YnVkWhfrwshO');
+INSERT INTO `user` VALUES (17, 'ttt', 0, 0, 'false', '$2a$10$ra63UjkNO6UgUoUsrJ98cO6.g8n5KfSvqbj/I33KnoLflw.mR/v.m');
 
 -- ----------------------------
 -- Table structure for video
@@ -80,16 +82,22 @@ CREATE TABLE `video`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '视频唯一表示',
   `play_url` varchar(124) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '视频播放地址',
   `cover_url` varchar(124) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '视频封面地址',
-  `favorite_count` int NULL DEFAULT NULL COMMENT '视频点赞总数',
-  `comment_count` int NULL DEFAULT NULL COMMENT '视频评论总数',
-  `id_favorite` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '点赞或者为点赞',
+  `favorite_count` int NOT NULL DEFAULT 0 COMMENT '视频点赞总数',
+  `comment_count` int NOT NULL DEFAULT 0 COMMENT '视频评论总数',
+  `is_favorite` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'false' COMMENT '点赞或者为点赞',
   `title` varchar(124) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '视频标题',
   `user_name` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '视频作者的名字',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of video
 -- ----------------------------
+INSERT INTO `video` VALUES (15, 'http://localhost:8084/video/11/VID_20230121_191709.mp4', 'http://localhost:8084/Cover/11/VID_20230121_191709.jpeg', 0, 0, 'false', '。。', 'tqq');
+INSERT INTO `video` VALUES (16, 'http://192.168.121.184:8084/video/17/VID_20230121_191709.mp4', 'http://192.168.121.184:8084/Cover/17/VID_20230121_191709.jpeg', 0, 0, 'false', '。。。', 'ttt');
+INSERT INTO `video` VALUES (17, 'http://192.168.1.184:8084/video/11/1234.mp4', 'http://192.168.1.184:8084/Cover/11/1234.jpeg', 0, 0, 'false', '你好', 'tqq');
+INSERT INTO `video` VALUES (18, 'http://192.168.1.184:8084/video/11/1234.mp4', 'http://192.168.1.184:8084/Cover/11/1234.jpeg', 0, 0, 'false', '你好', 'tqq');
+INSERT INTO `video` VALUES (19, 'http://192.168.1.184:8084/video/11/Screenrecorder-2023-02-21-19-24-00-9.mp4', NULL, 0, 0, 'false', '你好', 'tqq');
+INSERT INTO `video` VALUES (20, 'http://192.168.1.184:8084/video/11/Screenrecorder-2023-02-07-16-55-11-226.mp4', 'http://192.168.1.184:8084/Cover/11/Screenrecorder-2023-02-07-16-55-11-226.png', 0, 0, 'false', '你好', 'tqq');
 
 SET FOREIGN_KEY_CHECKS = 1;

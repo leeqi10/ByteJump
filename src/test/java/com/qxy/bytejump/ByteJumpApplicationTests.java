@@ -2,12 +2,15 @@ package com.qxy.bytejump;
 
 import com.qxy.bytejump.mapper.VideoMapper;
 import com.qxy.bytejump.utils.JwtUtil;
+import com.qxy.bytejump.utils.VideoCoverUtils;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Map;
 
 @SpringBootTest
 class ByteJumpApplicationTests {
@@ -37,7 +40,15 @@ class ByteJumpApplicationTests {
     }
     @Test
     public void testVideoInsert(){
-        videoMapper.insertFile("http://localhost:8084/video/11/VID_20230121_191709.mp4","11");
+        videoMapper.insertFile("http://localhost:8084/video/11/VID_20230121_191709.mp4","11","ss","sd");
     }
-
+    @Test
+    public void testVideoImage() {
+        Map<String, Object> vedioImg = VideoCoverUtils.getVedioImg("D:","1234.MP4",20);
+        System.out.println(vedioImg);
+    }
+    @Test
+    public  void testAddress(){
+        System.out.println(System.getProperty("user.dir"));
+    }
 }
