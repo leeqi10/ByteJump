@@ -38,6 +38,5 @@ public interface UserService extends IService<User> {
      * @apiNote 获取用户信息
      */
 
-
     ResponseUser getUser(String user_id, String token);
 }
