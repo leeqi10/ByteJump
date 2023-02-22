@@ -105,18 +105,18 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         }
         userId1 = claims.getSubject();
         */
-      //查询该用户信息
-      User user=userMapper.selectById(userId);
-      //查询用户的名字
-      String userName = user.getUsername();
-      //查询用户信息的所有视频
-      List<VideoPlus> userVideos = videoMapper.selectAllVideoByUserName(userName);
+          //查询该用户信息
+          User user = userMapper.selectById(userId);
+          //查询用户的名字
+          String userName = user.getUsername();
+          //查询用户信息的所有视频
+          List<VideoPlus> userVideos = videoMapper.selectAllVideoByUserName(userName);
+          for (VideoPlus userVideo : userVideos
+          ) {
+              userVideo.setAuthor(user);
+          }
         System.out.println(userVideos);
-        for (VideoPlus userVideo:userVideos
-             ) {
-            userVideo.setAuthor(user);
-        }
-        RePUserVideo rePUserVideo = new RePUserVideo(0,"查询成功",userVideos);
+        RePUserVideo rePUserVideo = new RePUserVideo(0, "查询成功", userVideos);
         return rePUserVideo;
     }
 
@@ -140,7 +140,6 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
                 }
             }
         }
-        System.out.println(videos);
         RePUserVideo rePUserVideo = new RePUserVideo(0,"成功",time,videos);
         return rePUserVideo;
     }

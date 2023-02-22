@@ -23,7 +23,7 @@ public interface VideoMapper extends BaseMapper<Video> {
     @Insert("insert into video (play_url,user_name,cover_url,title) values (#{path},#{name},#{cover_url},#{title})")
     int insertFile(String path, String name,String cover_url,String title);
 
-    @Select("select id,play_url,cover_url,favorite_count,comment_count,is_favorite,title from video where user_name=#{userName}")
+    @Select("select id,play_url,cover_url,favorite_count,comment_count,is_favorite,title,user_name from video where user_name=#{userName}")
     List<VideoPlus> selectAllVideoByUserName(String userName);
     @Select("select id,play_url,cover_url,favorite_count,comment_count,is_favorite,title,user_name from video limit 30")
     List<VideoPlus> selectAllVideo();
