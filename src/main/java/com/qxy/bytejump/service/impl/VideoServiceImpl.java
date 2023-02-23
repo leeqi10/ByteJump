@@ -122,14 +122,14 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     @Override
     public RePUserVideo selectAllVideo(String lastTime, String token) {
         //解析token
-        String userId;
-        try {
-            Claims claims = JwtUtil.parseJWT(token);
-            userId = claims.getSubject();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("token非法");
-        }
+        String userId="1";
+        if (token!=null){
+            try {
+                Claims claims = JwtUtil.parseJWT(token);
+                userId = claims.getSubject();
+            } catch (Exception e) {
+                throw new RuntimeException("token非法");
+            }}
         //查询所有视频
         List<VideoPlus> videos = videoMapper.selectAllVideo();
         //查询所有用户
