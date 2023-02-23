@@ -37,7 +37,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     @Override
     public Result Upload(MultipartFile file, String token, String title) {
         //存放主要的路由地址
-        String routing="http://192.168.32.184:8084/";
+        String routing="http://192.168.1.105:8084/";
         //存放的文件路径
         String filePath = "";
         //真实文件路径

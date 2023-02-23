@@ -19,27 +19,27 @@ public class VideoPlus {
     /**
      * 视频播放地址
      */
-    private String playUrl;
+    private String play_url;
 
     /**
      * 视频封面地址
      */
-    private String coverUrl;
+    private String cover_url;
 
     /**
      * 视频点赞总数
      */
-    private Integer favoriteCount;
+    private Integer favorite_count;
 
     /**
      * 视频评论总数
      */
-    private Integer commentCount;
+    private Integer comment_count;
 
     /**
      * 点赞或者为点赞
      */
-    private String isFavorite;
+    private String is_favorite;
 
     /**
      * 视频标题
@@ -53,36 +53,26 @@ public class VideoPlus {
 
     private User author;
 
-
-    public VideoPlus(Integer id, String playUrl, String coverUrl, Integer favoriteCount, Integer commentCount, String idFavorite, String title, User author) {
+    public VideoPlus(Integer id, String play_url, String cover_url, Integer favorite_count, Integer comment_count, String is_favorite, String title, String userName, User author) {
         this.id = id;
-        this.playUrl = playUrl;
-        this.coverUrl = coverUrl;
-        this.favoriteCount = favoriteCount;
-        this.commentCount = commentCount;
-        this.isFavorite = isFavorite;
+        this.play_url = play_url;
+        this.cover_url = cover_url;
+        this.favorite_count = favorite_count;
+        this.comment_count = comment_count;
+        this.is_favorite = is_favorite;
         this.title = title;
+        this.userName = userName;
         this.author = author;
     }
-    public VideoPlus(Integer id, String playUrl, String coverUrl, Integer favoriteCount, Integer commentCount, String idFavorite, String title, String userName) {
+
+    public VideoPlus(Integer id, String play_url, String cover_url, Integer favorite_count, Integer comment_count, String is_favorite, String title, String userName) {
         this.id = id;
-        this.playUrl = playUrl;
-        this.coverUrl = coverUrl;
-        this.favoriteCount = favoriteCount;
-        this.commentCount = commentCount;
-        this.isFavorite = isFavorite;
+        this.play_url = play_url;
+        this.cover_url = cover_url;
+        this.favorite_count = favorite_count;
+        this.comment_count = comment_count;
+        this.is_favorite = is_favorite;
         this.title = title;
         this.userName = userName;
     }
-
-    public VideoPlus(Integer id, String playUrl, String coverUrl, Integer favoriteCount, Integer commentCount, String idFavorite, String title) {
-        this.id = id;
-        this.playUrl = playUrl;
-        this.coverUrl = coverUrl;
-        this.favoriteCount = favoriteCount;
-        this.commentCount = commentCount;
-        this.isFavorite = isFavorite;
-        this.title = title;
-    }
-
 }
