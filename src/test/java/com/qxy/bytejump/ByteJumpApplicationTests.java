@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Date;
 import java.util.Map;
 
 @SpringBootTest
@@ -50,5 +51,14 @@ class ByteJumpApplicationTests {
     @Test
     public  void testAddress(){
         System.out.println(System.getProperty("user.dir"));
+    }
+
+    @Test
+    public  void getDate(){
+        //获得系统日期
+        Date date = new Date();
+        String time = date.toString();
+        System.out.println(time);
+
     }
 }

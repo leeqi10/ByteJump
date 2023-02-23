@@ -43,5 +43,11 @@ public class UserController {
     public ResponseUser user(@Param("user_id") String user_id, @Param("token") String token) {
         return userService.getUser(user_id,token);
     }
+    @ApiOperation(value = "赞操作", notes = "赞操作")
+    @GetMapping("/favorite/action/")
+    public Result userLikeVideo(@Param("token") String token,@Param("video_id") String videoId,@Param("action_type") String actionType) {
+        return null;
+    }
+
 }
 

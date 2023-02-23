@@ -2,7 +2,12 @@ package com.qxy.bytejump.mapper;
 
 import com.qxy.bytejump.entity.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +20,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
 
+    @Insert("insert into comment(user_name,content,create_data,video_id) values (#{userName},#{commentText},#{CreateTime},#{videoId})")
+    int insertComment(String userName,String commentText,String CreateTime,String videoId);
+    @Delete("delete from comment where id=#{id}")
+    int DeleteComment(String id);
+    @Select("select id from comment where create_data=#{time}")
+    String selectId(String time);
+
+    @Select("select * from comment where video_id=#{videoId}")
+    List<Comment> selectAllComment(String videoId);
 }

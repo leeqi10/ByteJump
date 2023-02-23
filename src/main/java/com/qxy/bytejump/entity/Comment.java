@@ -29,7 +29,9 @@ import lombok.EqualsAndHashCode;
 
     private String content;
 
-    private LocalDateTime createData;
+    private String createData;
+
+    private String videoId;
 
 
 }
