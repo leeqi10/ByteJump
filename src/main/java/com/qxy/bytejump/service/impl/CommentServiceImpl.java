@@ -66,6 +66,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         if (action_type.equals("2")){
             commentMapper.DeleteComment(comment_id);
         }
+        //更新评论数目
+
 
         //将user转换成userPlus
         UserPlus userPlus = new UserPlus();
@@ -103,6 +105,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             setComment.setUser(userPlus);
             setComments.add(setComment);
         }
+        //更新视频的评论数
+        commentMapper.updateComments(String.valueOf(commentList.size()),videoId);
         RepSelectComment repSelectComment = new RepSelectComment(0,"查询成功",setComments);
         return repSelectComment;
     }

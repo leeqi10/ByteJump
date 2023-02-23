@@ -1,12 +1,13 @@
 package com.qxy.bytejump.controller;
 import com.qxy.bytejump.entity.User;
+import com.qxy.bytejump.entity.response.RePUserVideo;
 import com.qxy.bytejump.entity.response.UserLR;
 import com.qxy.bytejump.entity.vo.ResponseUser;
 import com.qxy.bytejump.entity.vo.Result;
 import com.qxy.bytejump.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -40,13 +41,20 @@ public class UserController {
 
     @ApiOperation(value = "用户信息", notes = "用户信息")
     @GetMapping("/user/")
-    public ResponseUser user(@Param("user_id") String user_id, @Param("token") String token) {
+    public ResponseUser user( String user_id,  String token) {
         return userService.getUser(user_id,token);
     }
     @ApiOperation(value = "赞操作", notes = "赞操作")
-    @GetMapping("/favorite/action/")
-    public Result userLikeVideo(@Param("token") String token,@Param("video_id") String videoId,@Param("action_type") String actionType) {
-        return null;
+    @PostMapping("/favorite/action/")
+    @ResponseBody
+    public Result userLikeVideo( String token, String video_id, String action_type) {
+        return userService.userIsLike(token,video_id,action_type);
+    }
+    @ApiOperation(value = "用户喜欢列表", notes = "用户喜欢列表")
+    @GetMapping("/favorite/list/")
+    @ResponseBody
+    public RePUserVideo SelectAllLikeVideo(String token,  String user_id){
+        return userService.selectAllUserLike(token,user_id);
     }
 
 }

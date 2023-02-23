@@ -4,7 +4,7 @@ import com.qxy.bytejump.entity.response.RepSelectComment;
 import com.qxy.bytejump.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -26,14 +26,14 @@ public class CommentController {
     @ApiOperation(value = "查询评论", notes = "查询评论")
     @GetMapping("/list/")
     @ResponseBody
-    public RepSelectComment selectAllComment(@Param("token") String token, @Param("video_id") String video_id) {
+    public RepSelectComment selectAllComment(String token, String video_id) {
         return commentService.selectAllComment(token,video_id);
     }
 
     @ApiOperation(value = "评论操作", notes = "评论操作")
     @PostMapping("/action/")
     @ResponseBody
-    public RePSetComment setComment(@Param("token") String token, @Param("video_id") String video_id, @Param("action_type") String action_type, @Param("comment_text") String comment_text, @Param("comment_id") String comment_id) {
+    public RePSetComment setComment( String token,  String video_id,  String action_type,  String comment_text,  String comment_id) {
         return commentService.InsertComment(token,video_id,action_type,comment_text,comment_id);
     }
 

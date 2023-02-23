@@ -4,7 +4,7 @@ import com.qxy.bytejump.entity.vo.Result;
 import com.qxy.bytejump.service.VideoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class VideoController {
     @ApiOperation(value = "查询视频", notes = "查询视频")
     @GetMapping("/feed")
     @ResponseBody
-    public RePUserVideo getFeed(@Param("latest_time") String latest_time,@Param("token")  String token) {
+    public RePUserVideo getFeed( String latest_time,  String token) {
         System.out.println(latest_time);
         System.out.println(token);
         return videoService.selectAllVideo(latest_time,token);
@@ -35,13 +35,13 @@ public class VideoController {
     @ApiOperation(value = "投稿视频", notes = "投稿视频")
     @PostMapping("/publish/action/")
     @ResponseBody
-    public Result setUpload(@Param("data") MultipartFile data, @Param("token")String token, @Param("title")String title){
+    public Result setUpload(MultipartFile data, String token, String title){
         return videoService.Upload(data,token,title);
     }
     @ApiOperation(value = "用户视频列表", notes = "用户视频列表")
     @GetMapping("/publish/list/")
     @ResponseBody
-    public RePUserVideo SelectAllVideo(@Param("token") String token, @Param("user_id") String user_id){
+    public RePUserVideo SelectAllVideo( String token,  String user_id){
         return videoService.selectAllUserVideo(token,user_id);
     }
 

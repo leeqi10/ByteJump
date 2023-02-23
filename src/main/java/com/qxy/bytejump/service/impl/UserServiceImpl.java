@@ -2,15 +2,20 @@ package com.qxy.bytejump.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.qxy.bytejump.entity.User;
+import com.qxy.bytejump.entity.UserLikeVideo;
+import com.qxy.bytejump.entity.response.RePUserVideo;
 import com.qxy.bytejump.entity.response.UserLR;
 import com.qxy.bytejump.entity.vo.LoginUser;
 import com.qxy.bytejump.entity.vo.ResponseUser;
 import com.qxy.bytejump.entity.vo.Result;
+import com.qxy.bytejump.entity.vo.VideoPlus;
 import com.qxy.bytejump.mapper.UserMapper;
+import com.qxy.bytejump.mapper.VideoMapper;
 import com.qxy.bytejump.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qxy.bytejump.utils.JwtUtil;
 import com.qxy.bytejump.utils.RedisCache;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,6 +44,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
     @Autowired
     private RedisCache redisCache;
+    @Autowired
+    private VideoMapper videoMapper;
     @Override
     public UserLR register(User user) {
 
@@ -101,6 +108,76 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         map.put("is_follow",String.valueOf(user.getIsFollow()));
         ResponseUser<Map> responseUser = new ResponseUser<Map>(0,"查询成功",map);
         return responseUser;
+    }
+
+    @Override
+    public Result userIsLike(String token, String video_id, String action_Type) {
+        //解析token
+        String userId;
+        try {
+            Claims claims = JwtUtil.parseJWT(token);
+            userId = claims.getSubject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("token非法");
+        }
+        //查询有无该视频被该作者的喜欢
+        List<UserLikeVideo> userLikeVideos = userMapper.selectAllUserLikeByAll(video_id,userId);
+        //赞操作
+        if (action_Type.equals("1")){
+            if (userLikeVideos.size()<=0){
+                userMapper.insertUserLike(video_id,userId,"true");
+            }else {
+                userMapper.updateUserLike(video_id,userId,"true");
+
+            }
+        }
+        if (action_Type.equals("2")){
+            userMapper.updateUserLike(video_id,userId,"false");
+        }
+        //查询自己的视频被喜欢的数目
+        List<UserLikeVideo> userLikeVideos1=userMapper.selectAllUserLikeByVideo(video_id,"true");
+        int Likes=userLikeVideos1.size();
+        //更新视频被赞的数目
+        userMapper.updateFavorite(String.valueOf(Likes),video_id);
+            Result result = new Result(0,"操作成功");
+        return result;
+    }
+
+    @Override
+    public RePUserVideo selectAllUserLike(String token, String userId) {
+        //查询用户自己的所有喜欢的视频
+        List<UserLikeVideo> userLikeVideos = userMapper.selectAllUserLikeByUser(userId,"true");
+        //查询所有视频
+        List<VideoPlus> videos = videoMapper.selectAllVideo();
+        //赋值操作喜欢的视频
+        List<VideoPlus> videoLikes= new ArrayList<>();
+        //每个自己喜欢的视频
+        for (UserLikeVideo userLikeVideo:userLikeVideos
+             ) {
+            //每个视频
+            for ( VideoPlus videoPlus:videos
+                 ) {
+                if (userLikeVideo.getVideoId().equals(String.valueOf(videoPlus.getId()))){
+                    videoLikes.add(videoPlus);
+                }
+            }
+        }
+        //查询所有用户
+        List<User> users = userMapper.selectAllUser();
+        //遍历每一个视频
+        for (VideoPlus userVideo:videoLikes
+        ) {
+            //遍历每一个用户
+            for (User user:users
+            ) {
+                if (userVideo.getUserName().equals(user.getUsername())){
+                    userVideo.setAuthor(user);
+                }
+            }
+        }
+        RePUserVideo rePUserVideo = new RePUserVideo(0, "查询成功", videoLikes);
+        return rePUserVideo;
     }
 
 

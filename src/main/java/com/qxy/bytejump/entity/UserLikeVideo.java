@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 public class UserLikeVideo {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private String video_id;
+    private String videoId;
 
-    private String user_id;
+    private String userid;
 
-    private String  is_favorite;
+    private String  isFavorite;
 }

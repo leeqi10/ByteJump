@@ -28,4 +28,7 @@ public interface VideoMapper extends BaseMapper<Video> {
     @Select("select id,play_url,cover_url,favorite_count,comment_count,is_favorite,title,user_name from video limit 30")
     List<VideoPlus> selectAllVideo();
 
+    @Select("select is_favorite from userlikevideo where video_id=#{videoId} and user_id=#{userId}")
+    String isF(String videoId,String userId);
+
 }

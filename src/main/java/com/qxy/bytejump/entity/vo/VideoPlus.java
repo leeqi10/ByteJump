@@ -37,7 +37,7 @@ public class VideoPlus {
     private Integer comment_count;
 
     /**
-     * 点赞或者为点赞
+     * 点赞或者未点赞
      */
     private String is_favorite;
 

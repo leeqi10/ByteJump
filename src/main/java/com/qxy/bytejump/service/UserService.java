@@ -2,6 +2,7 @@ package com.qxy.bytejump.service;
 
 import com.qxy.bytejump.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qxy.bytejump.entity.response.RePUserVideo;
 import com.qxy.bytejump.entity.response.UserLR;
 import com.qxy.bytejump.entity.vo.ResponseUser;
 import com.qxy.bytejump.entity.vo.Result;
@@ -39,4 +40,15 @@ public interface UserService extends IService<User> {
      */
 
     ResponseUser getUser(String user_id, String token);
+    /**
+     *
+     * @param token
+     * @param video_id
+     * @param action_Type ,1是点赞，2是取消点赞
+     * @return
+     * @apiNote 获取用户信息
+     */
+    Result userIsLike(String token,String video_id,String action_Type);
+
+    RePUserVideo selectAllUserLike(String token,String userId);
 }

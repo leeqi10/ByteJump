@@ -2,10 +2,7 @@ package com.qxy.bytejump.mapper;
 
 import com.qxy.bytejump.entity.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,4 +26,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
 
     @Select("select * from comment where video_id=#{videoId}")
     List<Comment> selectAllComment(String videoId);
+
+    @Update("update video set comment_count=#{comments} where id=#{videoId}")
+    int updateComments(String comments,String videoId);
 }

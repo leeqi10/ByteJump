@@ -115,13 +115,21 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
           ) {
               userVideo.setAuthor(user);
           }
-        System.out.println(userVideos);
         RePUserVideo rePUserVideo = new RePUserVideo(0, "查询成功", userVideos);
         return rePUserVideo;
     }
 
     @Override
     public RePUserVideo selectAllVideo(String lastTime, String token) {
+        //解析token
+        String userId;
+        try {
+            Claims claims = JwtUtil.parseJWT(token);
+            userId = claims.getSubject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("token非法");
+        }
         //查询所有视频
         List<VideoPlus> videos = videoMapper.selectAllVideo();
         //查询所有用户
@@ -132,12 +140,17 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         //遍历每一个视频
         for (VideoPlus userVideo:videos
              ) {
+            //注入是否喜欢这个视频的状态
+            String isF= videoMapper.isF(String.valueOf(userVideo.getId()),userId);
+            userVideo.setIs_favorite(isF);
             //遍历每一个用户
             for (User user:users
                  ) {
                 if (userVideo.getUserName().equals(user.getUsername())){
                     userVideo.setAuthor(user);
                 }
+
+
             }
         }
         RePUserVideo rePUserVideo = new RePUserVideo(0,"成功",time,videos);
