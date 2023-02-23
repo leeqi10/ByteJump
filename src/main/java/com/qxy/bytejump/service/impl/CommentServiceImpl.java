@@ -57,7 +57,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //获得用户名字
         String userName = user.getUsername();
         //获取到插入评论之后的id
-        String commentId="";
+        String commentId="0";
         //发布发布评论
         if (action_type.equals("1")){
             commentMapper.insertComment(userName,comment_text,time,video_id);
@@ -66,9 +66,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         if (action_type.equals("2")){
             commentMapper.DeleteComment(comment_id);
         }
+        //查询这条视频的所有评论
+        List<Comment> commentList = commentMapper.selectAllComment(video_id);
         //更新评论数目
-
-
+        commentMapper.updateComments(String.valueOf(commentList.size()),video_id);
         //将user转换成userPlus
         UserPlus userPlus = new UserPlus();
         userPlus.setId(user.getId());
