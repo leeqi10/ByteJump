@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qxy.bytejump.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com/qxy/bytejump/entity/User.java">
+    <resultMap id="BaseResultMap" type="com.qxy.bytejump.entity.User">
         <id property="id" column="id"></id>
-        <result property="name" column="name"/>
+        <result property="username" column="name"/>
         <result property="password" column="password"/>
-        <result property="follow_count" column="follow_count"/>
-        <result property="follower_count" column="follower_count"/>
-        <result property="is_follow" column="is_follow"/>
+        <result property="followCount" column="follow_count"/>
+        <result property="followerCount" column="follower_count"/>
+        <result property="isFollow" column="is_follow"/>
     </resultMap>
 
 </mapper>
