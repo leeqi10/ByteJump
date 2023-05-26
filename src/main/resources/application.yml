@@ -1,6 +1,6 @@
 #mybatis-plus配置
 mybatis-plus:
-  mapper-locations: classpath*:com/qxy/bytejump/mapper/**/*.xml
+  mapper-locations: classpath*:/mapper/**/*.xml
 server:
   port: 8084
 spring:

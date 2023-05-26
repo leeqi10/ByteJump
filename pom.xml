@@ -151,9 +151,11 @@
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/java</directory>
+                <directory>src/main/resources</directory>
                 <includes>
-                    <include>/com/qxy/bytejump/mapper/**/*.xml</include>
+                    <include>mapper/**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>static/**/*.</include>
                 </includes>
             </resource>
         </resources>
