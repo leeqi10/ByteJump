@@ -155,7 +155,7 @@
                 <includes>
                     <include>mapper/**/*.xml</include>
                     <include>**/*.yml</include>
-                    <include>static/**/*.</include>
+                    <include>static/**/*.*</include>
                 </includes>
             </resource>
         </resources>
