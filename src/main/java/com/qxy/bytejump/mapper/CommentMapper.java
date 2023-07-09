@@ -17,16 +17,16 @@ import java.util.List;
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
 
-    @Insert("insert into comment(user_name,content,create_data,video_id) values (#{userName},#{commentText},#{CreateTime},#{videoId})")
+    //@Insert("insert into comment(user_name,content,create_data,video_id) values (#{userName},#{commentText},#{CreateTime},#{videoId})")
     int insertComment(String userName,String commentText,String CreateTime,String videoId);
-    @Delete("delete from comment where id=#{id}")
+    //@Delete("delete from comment where id=#{id}")
     int DeleteComment(String id);
-    @Select("select id from comment where create_data=#{time}")
+    //@Select("select id from comment where create_data=#{time}")
     String selectId(String time);
 
-    @Select("select * from comment where video_id=#{videoId}")
-    List<Comment> selectAllComment(String videoId);
+    //@Select("select * from comment where video_id=#{videoId}")
+    List selectAllComment(String videoId);
 
-    @Update("update video set comment_count=#{comments} where id=#{videoId}")
+    //@Update("update video set comment_count=#{comments} where id=#{videoId}")
     int updateComments(String comments,String videoId);
 }

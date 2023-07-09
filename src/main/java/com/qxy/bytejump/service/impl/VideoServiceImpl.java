@@ -13,6 +13,7 @@ import com.qxy.bytejump.utils.JwtUtil;
 import com.qxy.bytejump.utils.VideoCoverUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,10 +35,11 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     private VideoMapper videoMapper;
     @Autowired
     private UserMapper userMapper;
+    //存放主要的路由地址
+    @Value("${upload.path.domain}")
+    String routing;
     @Override
     public Result Upload(MultipartFile file, String token, String title) {
-        //存放主要的路由地址
-        String routing="http://ucd.com.cn/:8084/";
         //存放的文件路径
         String filePath = "";
         //真实文件路径

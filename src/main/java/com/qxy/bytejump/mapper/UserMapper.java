@@ -26,13 +26,6 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> selectAllUser();
     @Select("select id, username,follow_count,follower_count,is_follow from user where username=#{userName}")
     User selectAllUserByUserName(String userName);
-
-    @Select("select id,video_id,user_id,is_favorite from userlikevideo")
-    List<UserLikeVideo> selectAllLike();
-
-    @Select("select id,video_id,user_id,is_favorite from userlikevideo where video_id=#{videoId}")
-    List<UserLikeVideo> selectAllUserLikeByVideo(String videoId);
-
     @Select("select id,video_id,user_id,is_favorite from userlikevideo where user_id=#{userId} and is_favorite=#{isFavorite}")
     List<UserLikeVideo> selectAllUserLikeByUser(String userId,String isFavorite);
 
