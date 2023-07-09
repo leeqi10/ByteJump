@@ -24,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -78,6 +79,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public UserLR login(User user) {
+        //登录限流策略
+        //是否允许通过
+        boolean loginIs = redisCache.isAllowedToLogin(user.getUsername(),5, Duration.ofMinutes(1));
+        if (!loginIs){
+            return new UserLR(1,"登录失败,一分钟内只允许登录5次", null,null);
+        }
         //使用Authentication authenticate认证
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);

@@ -1,12 +1,10 @@
 package com.qxy.bytejump.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundSetOperations;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisCache
 {
+    private static final String LOGIN_LIMIT_KEY = "login_limit:%s";
     @Autowired
     public RedisTemplate redisTemplate;
 
@@ -234,5 +233,22 @@ public class RedisCache
     public Collection<String> keys(final String pattern)
     {
         return redisTemplate.keys(pattern);
+    }
+
+    /**
+     * 对于用户登录进行限流策略
+     * @param username 限制用户
+     * @param limit 限制在duration中登录次数
+     * @param duration 限制的时间
+     * @return
+     */
+    public boolean isAllowedToLogin(String username, int limit, Duration duration) {
+        String key = String.format(LOGIN_LIMIT_KEY, username);
+        BoundValueOperations<String, Object> ops = redisTemplate.boundValueOps(key);
+        Long count = ops.increment(1);
+        if (count == 1) {
+            ops.expire(duration);
+        }
+        return count <= limit;
     }
 }
