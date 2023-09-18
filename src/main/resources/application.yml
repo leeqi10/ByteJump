@@ -42,7 +42,7 @@ spring:
 # upload
 upload:
   path:
-    domain: http://ucd.com.cn:8748
+    domain: localhost
     folder:
     getfile:
 
