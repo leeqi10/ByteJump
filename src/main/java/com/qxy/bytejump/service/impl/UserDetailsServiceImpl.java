@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- *@description TODO
- *@author zzhi
- *@createDate 2022/3/1
- *@version 1.0
+ * @author zzhi
+ * @version 1.0
+ * @description TODO
+ * @createDate 2022/3/1
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -35,10 +35,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         //查询用户信息
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getUsername,username);
+        queryWrapper.eq(User::getUsername, username);
         User user = userManager.selectOne(queryWrapper);
 
-        if (Objects.isNull(user)){
+        if (Objects.isNull(user)) {
             throw new RuntimeException("用户名不存在");
         }
 
@@ -46,6 +46,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<String> list = new ArrayList<>();
         list.add("任何权限");
         //封装为UserDetails
-        return new LoginUser(user,list);
+        return new LoginUser(user, list);
     }
 }

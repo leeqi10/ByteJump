@@ -16,5 +16,5 @@ public class UserLikeVideo {
 
     private String userid;
 
-    private String  isFavorite;
+    private String isFavorite;
 }

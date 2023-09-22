@@ -1,7 +1,6 @@
 package com.qxy.bytejump.config;
 
 
-
 import com.github.dozermapper.core.Mapper;
 import com.qxy.bytejump.utils.DozerUtils;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
  * <p>
  * http://dozer.sourceforge.net/documentation/usage.html
  * http://www.jianshu.com/p/bf8f0e8aee23
- *
  */
 @Configuration
 public class DozerAutoConfiguration {

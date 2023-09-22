@@ -21,10 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- *@description TODO
- *@author leeqi10
- *@createDate 2023/1/25
- *@version 1.0
+ * @author leeqi10
+ * @version 1.0
+ * @description TODO
+ * @createDate 2023/1/25
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -38,14 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationEntryPointImpl authenticationEntryPoint;
+
     //注入BCryptPasswordEncoder
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring(). antMatchers("/swagger-ui.html")
+        web.ignoring().antMatchers("/swagger-ui.html")
                 .antMatchers("/webjars/**")
                 .antMatchers("/v2/**")
                 .antMatchers("/swagger-resources/**")
@@ -54,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/csrf")
                 .antMatchers("/favicon.ico");
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -77,8 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/douyin/publish/list/").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
-                //允许用户匿名访问
-                //.anyRequest().permitAll();
+        //允许用户匿名访问
+        //.anyRequest().permitAll();
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         //允许跨越

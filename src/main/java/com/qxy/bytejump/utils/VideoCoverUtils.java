@@ -27,6 +27,7 @@ import org.springframework.util.StringUtils;
  */
 public class VideoCoverUtils {
     private static final Logger logger = LoggerFactory.getLogger(VideoCoverUtils.class);
+
     /**
      * 获取视频图片
      *
@@ -36,7 +37,7 @@ public class VideoCoverUtils {
      * @return: void
      */
     public static Map<String, Object> getVedioImg(String filePath, String fileName, int second) {
-        return  getImage(filePath, fileName, second);
+        return getImage(filePath, fileName, second);
     }
 
     /**
@@ -51,13 +52,13 @@ public class VideoCoverUtils {
         return getImage(filePath, fileName, 1);
     }
 
-    public   static String getImageAddress(String routing,String filePath, String fileName, int second) {
-        File folder = new File("video"+"/"+filePath);
+    public static String getImageAddress(String routing, String filePath, String fileName, int second) {
+        File folder = new File("video" + "/" + filePath);
         if (!folder.exists()) {
             folder.mkdirs();//如果文件夹不存在则创建
         }
         try {
-            FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(System.getProperty("user.dir")+File.separator+"video"+File.separator+filePath + File.separator + fileName);
+            FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(System.getProperty("user.dir") + File.separator + "video" + File.separator + filePath + File.separator + fileName);
             grabber.start();
             int ftp = grabber.getLengthInFrames();
             int flag = 0;
@@ -79,14 +80,14 @@ public class VideoCoverUtils {
                 //旋转图片
                 bufferedImage = rotate(bufferedImage, Integer.parseInt(rotate));
             }
-            File folder1 = new File("Cover/"+filePath);
+            File folder1 = new File("Cover/" + filePath);
             if (!folder1.exists()) {
                 folder1.mkdirs();//如果文件夹不存在则创建
             }
-            String newFileName = "Cover/"+filePath+ "/" + fileName.substring(0, fileName.lastIndexOf(".")) + ".png";
+            String newFileName = "Cover/" + filePath + "/" + fileName.substring(0, fileName.lastIndexOf(".")) + ".png";
             File file = new File(newFileName);
             ImageIO.write(bufferedImage, "jpeg", file);
-            return routing+newFileName;
+            return routing + newFileName;
         } catch (FFmpegFrameGrabber.Exception e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -94,6 +95,7 @@ public class VideoCoverUtils {
         }
         return null;
     }
+
     private static Map<String, Object> getImage(String filePath, String fileName, int second) {
         Map<String, Object> result = new HashMap<String, Object>();
         File folder = new File(filePath);
@@ -145,6 +147,7 @@ public class VideoCoverUtils {
 
     /**
      * 旋转 根据视频旋转度来调整图片
+     *
      * @param src
      * @param angel
      * @return
@@ -165,6 +168,7 @@ public class VideoCoverUtils {
 
     /**
      * 计算图片旋转大小
+     *
      * @param src
      * @param angel
      * @return
@@ -189,18 +193,20 @@ public class VideoCoverUtils {
         int des_height = src.height + len_height * 2;
         return new Rectangle(new Dimension(des_width, des_height));
     }
+
     /**
      * 获取精确到秒的时间戳
+     *
      * @return
      */
-    public static String getSecondTimestamp(Date date){
+    public static String getSecondTimestamp(Date date) {
         if (null == date) {
             return "0";
         }
         String timestamp = String.valueOf(date.getTime());
         int length = timestamp.length();
         if (length > 3) {
-            return timestamp.substring(0,length-3);
+            return timestamp.substring(0, length - 3);
         } else {
             return "0";
         }

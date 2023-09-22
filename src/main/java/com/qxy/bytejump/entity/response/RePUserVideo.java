@@ -33,7 +33,7 @@ public class RePUserVideo {
         this.video_list = video_list;
     }
 
-    public RePUserVideo(Integer status_code, String status_msg,String next_time,List<VideoPlus> video_list) {
+    public RePUserVideo(Integer status_code, String status_msg, String next_time, List<VideoPlus> video_list) {
         this.status_code = status_code;
         this.status_msg = status_msg;
         this.next_time = next_time;

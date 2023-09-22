@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 /**
  * DozerUtils 工具类
- *
  */
 public class DozerUtils {
     private Mapper mapper;

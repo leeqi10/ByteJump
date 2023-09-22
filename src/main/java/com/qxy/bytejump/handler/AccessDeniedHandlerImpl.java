@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *@description TODO
- *@author leeqi10
- *@createDate 2023/1/25
- *@version 1.0
+ * @author leeqi10
+ * @version 1.0
+ * @description TODO
+ * @createDate 2023/1/25
  */
 
 @Component
@@ -32,12 +32,12 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         StringBuffer requestURL = request.getRequestURL();
-        log.info("requestURL {}",requestURL);
+        log.info("requestURL {}", requestURL);
         Map<String, Object> map = new HashMap<>();
         map.put("code", HttpStatus.FORBIDDEN.value());
         map.put("msg", HttpStatus.FORBIDDEN.getReasonPhrase());
         String json = JSON.toJSONString(map);
-        log.info("json::{}",json);
-        WebUtils.renderString(response,json);
+        log.info("json::{}", json);
+        WebUtils.renderString(response, json);
     }
 }

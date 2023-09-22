@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.ALWAYS)
 public class UserPlus {
-     private Long id;
+    private Long id;
 
     private String name;
 

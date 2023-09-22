@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author leeqi10
@@ -19,6 +19,6 @@ public interface VideoService extends IService<Video> {
 
     RePUserVideo selectAllUserVideo(String token, String userId);
 
-    RePUserVideo selectAllVideo(String lastTime,String token);
+    RePUserVideo selectAllVideo(String lastTime, String token);
 
 }

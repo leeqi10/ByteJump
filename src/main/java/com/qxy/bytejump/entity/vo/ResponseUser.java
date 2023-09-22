@@ -28,6 +28,7 @@ public class ResponseUser<T> {
         this.status_code = status_code;
         this.user = user;
     }
+
     public ResponseUser(Integer status_code, String status_msg, T user) {
         this.status_code = status_code;
         this.status_msg = status_msg;

@@ -10,17 +10,17 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author leeqi10
  * @since 2023-01-25
  */
 @Data
-  @EqualsAndHashCode(callSuper = false)
-    public class Comment implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class Comment implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;

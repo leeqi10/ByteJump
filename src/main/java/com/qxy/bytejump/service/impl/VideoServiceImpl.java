@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author leeqi10
@@ -38,6 +38,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     //存放主要的路由地址
     @Value("${upload.path.domain}")
     String routing;
+
     @Override
     public Result Upload(MultipartFile file, String token, String title) {
         //存放的文件路径
@@ -49,7 +50,7 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         //解析token的claims
         Claims claims = null;
         //文件名称
-        String fileName=file.getOriginalFilename();
+        String fileName = file.getOriginalFilename();
         try {
             claims = JwtUtil.parseJWT(token);
         } catch (Exception e) {
@@ -57,23 +58,23 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         }
         userId = claims.getSubject();
 
-        File dir = new File(realPath+"/"+userId);
+        File dir = new File(realPath + "/" + userId);
         //文件目录不存在，就创建一个
         if (!dir.isDirectory()) {
             dir.mkdirs();
         }
-        filePath=userId+"/"+fileName;
+        filePath = userId + "/" + fileName;
         //开始读写文件
-        File file1 = new File(realPath+"/"+filePath);
+        File file1 = new File(realPath + "/" + filePath);
         try {
             OutputStream fileOutputStream = new FileOutputStream(file1);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
             InputStream fileInputStream = file.getInputStream();
             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-            byte[] b=new byte[1024];
+            byte[] b = new byte[1024];
             int c;
-            while((c=bufferedInputStream.read(b))!=(-1)){
-                bufferedOutputStream.write(b,0,c);
+            while ((c = bufferedInputStream.read(b)) != (-1)) {
+                bufferedOutputStream.write(b, 0, c);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -81,42 +82,41 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
             e.printStackTrace();
         }
         //地址路径
-        String path=routing+realPath+"/"+filePath;
+        String path = routing + realPath + "/" + filePath;
         //设置username
         User user = userMapper.selectById(userId);
-        String userName=user.getUsername();
+        String userName = user.getUsername();
         //设置cover路径
-        String pathImage= VideoCoverUtils.getImageAddress(routing,userId,fileName,1);
+        String pathImage = VideoCoverUtils.getImageAddress(routing, userId, fileName, 1);
         //插入数据库
-        videoMapper.insertFile(path,userName,pathImage,title);
+        videoMapper.insertFile(path, userName, pathImage, title);
         //返回数据设置
-        Result result = new Result(0,"发布成功");
+        Result result = new Result(0, "发布成功");
         return result;
     }
 
     @Override
     public RePUserVideo selectAllUserVideo(String token, String userId) {
         //可以根据token和userid是否相等进行验证，来提高安全性和隐私性
-      /**
-        Claims claims=null;
-        String userId1;
-        try {
-            claims = JwtUtil.parseJWT(token);
-        } catch (Exception e) {
-            e.printStackTrace();
+        /**
+         Claims claims=null;
+         String userId1;
+         try {
+         claims = JwtUtil.parseJWT(token);
+         } catch (Exception e) {
+         e.printStackTrace();
+         }
+         userId1 = claims.getSubject();
+         */
+        //查询该用户信息
+        User user = userMapper.selectById(userId);
+        //查询用户的名字
+        String userName = user.getUsername();
+        //查询用户信息的所有视频
+        List<VideoPlus> userVideos = videoMapper.selectAllVideoByUserName(userName);
+        for (VideoPlus userVideo : userVideos) {
+            userVideo.setAuthor(user);
         }
-        userId1 = claims.getSubject();
-        */
-          //查询该用户信息
-          User user = userMapper.selectById(userId);
-          //查询用户的名字
-          String userName = user.getUsername();
-          //查询用户信息的所有视频
-          List<VideoPlus> userVideos = videoMapper.selectAllVideoByUserName(userName);
-          for (VideoPlus userVideo : userVideos
-          ) {
-              userVideo.setAuthor(user);
-          }
         RePUserVideo rePUserVideo = new RePUserVideo(0, "查询成功", userVideos);
         return rePUserVideo;
     }
@@ -124,14 +124,15 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
     @Override
     public RePUserVideo selectAllVideo(String lastTime, String token) {
         //解析token
-        String userId="1";
-        if (token!=null){
+        String userId = "1";
+        if (token != null) {
             try {
                 Claims claims = JwtUtil.parseJWT(token);
                 userId = claims.getSubject();
             } catch (Exception e) {
                 throw new RuntimeException("token非法");
-            }}
+            }
+        }
         //查询所有视频
         List<VideoPlus> videos = videoMapper.selectAllVideo();
         //查询所有用户
@@ -140,22 +141,20 @@ public class VideoServiceImpl extends ServiceImpl<VideoMapper, Video> implements
         String time = VideoCoverUtils.getSecondTimestamp(new Date());
         //实现每个视频关联自己的用户
         //遍历每一个视频
-        for (VideoPlus userVideo:videos
-             ) {
+        for (VideoPlus userVideo : videos) {
             //注入是否喜欢这个视频的状态
-            String isF= videoMapper.isF(String.valueOf(userVideo.getId()),userId);
+            String isF = videoMapper.isF(String.valueOf(userVideo.getId()), userId);
             userVideo.setIs_favorite(isF);
             //遍历每一个用户
-            for (User user:users
-                 ) {
-                if (userVideo.getUserName().equals(user.getUsername())){
+            for (User user : users) {
+                if (userVideo.getUserName().equals(user.getUsername())) {
                     userVideo.setAuthor(user);
                 }
 
 
             }
         }
-        RePUserVideo rePUserVideo = new RePUserVideo(0,"成功",time,videos);
+        RePUserVideo rePUserVideo = new RePUserVideo(0, "成功", time, videos);
         return rePUserVideo;
     }
 }

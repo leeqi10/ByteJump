@@ -31,13 +31,15 @@ public class Result<T> {
         this.status_code = status_code;
         this.data = data;
     }
+
     public Result(Integer status_code, String status_msg, T data) {
         this.status_code = status_code;
         this.status_msg = status_msg;
         this.data = data;
     }
-    public static Result success(Integer status_code, String status_msg, Object data){
-        Result tResult = new Result(status_code,status_msg,data);
+
+    public static Result success(Integer status_code, String status_msg, Object data) {
+        Result tResult = new Result(status_code, status_msg, data);
         return tResult;
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author leeqi10
@@ -18,9 +18,11 @@ import java.util.List;
 public interface CommentMapper extends BaseMapper<Comment> {
 
     //@Insert("insert into comment(user_name,content,create_data,video_id) values (#{userName},#{commentText},#{CreateTime},#{videoId})")
-    int insertComment(String userName,String commentText,String CreateTime,String videoId);
+    int insertComment(String userName, String commentText, String CreateTime, String videoId);
+
     //@Delete("delete from comment where id=#{id}")
     int DeleteComment(String id);
+
     //@Select("select id from comment where create_data=#{time}")
     String selectId(String time);
 
@@ -28,5 +30,5 @@ public interface CommentMapper extends BaseMapper<Comment> {
     List selectAllComment(String videoId);
 
     //@Update("update video set comment_count=#{comments} where id=#{videoId}")
-    int updateComments(String comments,String videoId);
+    int updateComments(String comments, String videoId);
 }

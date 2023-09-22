@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *@description TODO
- *@author leeqi10
- *@createDate 2022/3/1
- *@version 1.0
+ * @author leeqi10
+ * @version 1.0
+ * @description TODO
+ * @createDate 2022/3/1
  */
 @Data
 @NoArgsConstructor
@@ -35,20 +35,20 @@ public class LoginUser implements UserDetails {
         this.user = user;
         this.permissions = permissions;
     }
+
     public LoginUser(User user) {
-        this.user=user;
+        this.user = user;
     }
 
     @JSONField(serialize = false)
     public List<SimpleGrantedAuthority> permissionList;
 
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         //将permissions的字符传入SimpleGrantedAuthority
-       /* permissionList = new ArrayList<>();*/
+        /* permissionList = new ArrayList<>();*/
         //使用函数式
       /*  List<SimpleGrantedAuthority> permissionList = permissions.stream()
                 .map(SimpleGrantedAuthority::new)

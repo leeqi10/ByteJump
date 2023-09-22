@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author leeqi10
@@ -57,19 +57,19 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //获得用户名字
         String userName = user.getUsername();
         //获取到插入评论之后的id
-        String commentId="0";
+        String commentId = "0";
         //发布发布评论
-        if (action_type.equals("1")){
-            commentMapper.insertComment(userName,comment_text,time,video_id);
-            commentId=commentMapper.selectId(time);
+        if (action_type.equals("1")) {
+            commentMapper.insertComment(userName, comment_text, time, video_id);
+            commentId = commentMapper.selectId(time);
         }
-        if (action_type.equals("2")){
+        if (action_type.equals("2")) {
             commentMapper.DeleteComment(comment_id);
         }
         //查询这条视频的所有评论
         List<Comment> commentList = commentMapper.selectAllComment(video_id);
         //更新评论数目
-        commentMapper.updateComments(String.valueOf(commentList.size()),video_id);
+        commentMapper.updateComments(String.valueOf(commentList.size()), video_id);
         //将user转换成userPlus
         UserPlus userPlus = new UserPlus();
         userPlus.setId(user.getId());
@@ -77,8 +77,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         userPlus.setFollow_count(user.getFollowCount());
         userPlus.setFollower_count(user.getFollowerCount());
         userPlus.setIs_follow(user.getIsFollow());
-        SetComment setComment = new SetComment(Integer.parseInt(commentId),userPlus,comment_text,time);
-        RePSetComment rePSetComment = new RePSetComment(0,"评论成功",setComment);
+        SetComment setComment = new SetComment(Integer.parseInt(commentId), userPlus, comment_text, time);
+        RePSetComment rePSetComment = new RePSetComment(0, "评论成功", setComment);
         return rePSetComment;
     }
 
@@ -87,9 +87,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //查询这条视频的所有评论
         List<Comment> commentList = commentMapper.selectAllComment(videoId);
         //注入到返回评论集合的实体集且注入作者信息
-        List<SetComment> setComments=new ArrayList<>();
-        for (Comment comment:commentList
-             ) {
+        List<SetComment> setComments = new ArrayList<>();
+        for (Comment comment : commentList
+        ) {
             //个体注入
             SetComment setComment = new SetComment();
             setComment.setId(comment.getId());
@@ -107,8 +107,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             setComments.add(setComment);
         }
         //更新视频的评论数
-        commentMapper.updateComments(String.valueOf(commentList.size()),videoId);
-        RepSelectComment repSelectComment = new RepSelectComment(0,"查询成功",setComments);
+        commentMapper.updateComments(String.valueOf(commentList.size()), videoId);
+        RepSelectComment repSelectComment = new RepSelectComment(0, "查询成功", setComments);
         return repSelectComment;
     }
 }

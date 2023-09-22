@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author leeqi10
@@ -24,24 +24,27 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select id, username,follow_count,follower_count,is_follow from user")
     List<User> selectAllUser();
+
     @Select("select id, username,follow_count,follower_count,is_follow from user where username=#{userName}")
     User selectAllUserByUserName(String userName);
+
     @Select("select id,video_id,user_id,is_favorite from userlikevideo where user_id=#{userId} and is_favorite=#{isFavorite}")
-    List<UserLikeVideo> selectAllUserLikeByUser(String userId,String isFavorite);
+    List<UserLikeVideo> selectAllUserLikeByUser(String userId, String isFavorite);
 
     @Select("select id,video_id,user_id,is_favorite from userlikevideo where video_id=#{videoId} and user_id=#{userId}")
-    List<UserLikeVideo> selectAllUserLikeByAll(String videoId,String userId);
+    List<UserLikeVideo> selectAllUserLikeByAll(String videoId, String userId);
 
     @Select("select id,video_id,user_id,is_favorite from userlikevideo where video_id=#{videoId} and is_favorite=#{isFavorite}")
-    List<UserLikeVideo> selectAllUserLikeByVideo(String videoId,String isFavorite);
+    List<UserLikeVideo> selectAllUserLikeByVideo(String videoId, String isFavorite);
 
     @Insert("insert into userlikevideo(video_id,user_id,is_favorite) values(#{videoId},#{userId},#{isFavorite})")
-    int insertUserLike(String videoId,String userId,String isFavorite);
+    int insertUserLike(String videoId, String userId, String isFavorite);
+
     @Update("update userlikevideo set is_favorite=#{isFavorite} where video_id=#{videoId} and user_id=#{userId} ")
-    int updateUserLike(String videoId,String userId,String isFavorite);
+    int updateUserLike(String videoId, String userId, String isFavorite);
 
 
     @Update("update video set favorite_count=#{favorites} where id=#{videoId}")
-    int updateFavorite(String favorites,String videoId);
+    int updateFavorite(String favorites, String videoId);
 
 }

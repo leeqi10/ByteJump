@@ -7,7 +7,7 @@ import com.qxy.bytejump.entity.response.RepSelectComment;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author leeqi10
@@ -15,8 +15,8 @@ import com.qxy.bytejump.entity.response.RepSelectComment;
  */
 public interface CommentService extends IService<Comment> {
 
-    RePSetComment InsertComment(String token,String video_id,String action_type,String comment_text,String comment_id);
+    RePSetComment InsertComment(String token, String video_id, String action_type, String comment_text, String comment_id);
 
-    RepSelectComment selectAllComment(String token,String videoId);
+    RepSelectComment selectAllComment(String token, String videoId);
 
 }

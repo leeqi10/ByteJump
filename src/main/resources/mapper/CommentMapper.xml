@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qxy.bytejump.mapper.CommentMapper">
-<insert id="insertComment" >
-    insert into comment(user_name,content,create_data,video_id) values (#{userName},#{commentText},#{CreateTime},#{videoId})
-</insert>
+    <insert id="insertComment">
+        insert into comment(user_name, content, create_data, video_id)
+        values (#{userName}, #{commentText}, #{CreateTime}, #{videoId})
+    </insert>
     <delete id="DeleteComment">
-        delete from comment where id=#{id}
+        delete
+        from comment
+        where id = #{id}
     </delete>
     <select id="selectId" resultType="java.lang.String">
-        select id from comment where create_data=#{time}
+        select id
+        from comment
+        where create_data = #{time}
     </select>
     <select id="selectAllComment" resultType="java.util.List">
-        select * from comment where video_id=#{videoId}
+        select *
+        from comment
+        where video_id = #{videoId}
     </select>
-    <update id="updateComments" >
-        update video set comment_count=#{comments} where id=#{videoId}
+    <update id="updateComments">
+        update video
+        set comment_count=#{comments}
+        where id = #{videoId}
     </update>
 </mapper>

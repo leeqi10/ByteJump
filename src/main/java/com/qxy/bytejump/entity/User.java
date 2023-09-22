@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author leeqi10
@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-  @EqualsAndHashCode(callSuper = false)
-    public class User implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class User implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -38,8 +38,8 @@ import lombok.NoArgsConstructor;
 
     private String password;
 
-  public User(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

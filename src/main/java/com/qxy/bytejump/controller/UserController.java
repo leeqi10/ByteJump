@@ -1,4 +1,5 @@
 package com.qxy.bytejump.controller;
+
 import com.qxy.bytejump.entity.User;
 import com.qxy.bytejump.entity.response.RePUserVideo;
 import com.qxy.bytejump.entity.response.UserLR;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author leeqi10
@@ -41,20 +42,22 @@ public class UserController {
 
     @ApiOperation(value = "用户信息", notes = "用户信息")
     @GetMapping("/user/")
-    public ResponseUser user( String user_id,  String token) {
-        return userService.getUser(user_id,token);
+    public ResponseUser user(String user_id, String token) {
+        return userService.getUser(user_id, token);
     }
+
     @ApiOperation(value = "赞操作", notes = "赞操作")
     @PostMapping("/favorite/action/")
     @ResponseBody
-    public Result userLikeVideo( String token, String video_id, String action_type) {
-        return userService.userIsLike(token,video_id,action_type);
+    public Result userLikeVideo(String token, String video_id, String action_type) {
+        return userService.userIsLike(token, video_id, action_type);
     }
+
     @ApiOperation(value = "用户喜欢列表", notes = "用户喜欢列表")
     @GetMapping("/favorite/list/")
     @ResponseBody
-    public RePUserVideo SelectAllLikeVideo(String token,  String user_id){
-        return userService.selectAllUserLike(token,user_id);
+    public RePUserVideo SelectAllLikeVideo(String token, String user_id) {
+        return userService.selectAllUserLike(token, user_id);
     }
 
 }

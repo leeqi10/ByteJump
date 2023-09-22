@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @EnableSwagger2      //开启Swagger2
 public class SwaggerConfig {
     @Bean
-    public Docket docket(){
+    public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .build();
     }
 
-    private ApiInfo apiInfo(){
+    private ApiInfo apiInfo() {
         //作者信息
         Contact contact = new Contact("leeqi10", "https://github.com/leeqi10", "447789814@qq.com");
         return new ApiInfo("Swagger Api 接口",
