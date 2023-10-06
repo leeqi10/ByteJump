@@ -6,7 +6,6 @@ package com.qxy.bytejump.filter;/**
 
 import com.qxy.bytejump.entity.User;
 import com.qxy.bytejump.entity.vo.LoginUser;
-import com.qxy.bytejump.mapper.UserMapper;
 import com.qxy.bytejump.utils.JwtUtil;
 import com.qxy.bytejump.utils.RedisCache;
 
@@ -36,11 +35,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private RedisCache redisCache;
-    @Autowired
-    private UserMapper userManager;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        //获取token,第一次登录的时候，无token直接放行即可
+        //获取token
         String token = request.getParameter("token");
         if (!StringUtils.hasText(token)) {
             filterChain.doFilter(request, response);
@@ -60,10 +58,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String redisKey = "login:" + userId;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if (Objects.isNull(loginUser)) {
-            throw new RuntimeException("登录已过期，请重新刷新登录");
+            throw new RuntimeException("用户未登录");
         }
-        //将redis用户信息带入到下一个拦截器
-        request.setAttribute("loginUserRedis",loginUser);
+
         //存入SecurityContextHolder
         //TODO 获取权限信息
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
