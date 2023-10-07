@@ -20,6 +20,10 @@ class ByteJumpApplicationTests {
     @Test
     void contextLoads() {
     }
+
+    /**
+     * @description this is a test,which makes sure token made true.
+     */
     @Test
     public void testPasswordEncoder(){
         PasswordEncoder ps = new BCryptPasswordEncoder();
