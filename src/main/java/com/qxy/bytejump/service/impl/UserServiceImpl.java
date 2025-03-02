@@ -18,6 +18,7 @@ import com.qxy.bytejump.utils.JwtUtil;
 import com.qxy.bytejump.utils.RedisCache;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -110,6 +111,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    @Cacheable(value = "user", key = "#user_id")
     public ResponseUser getUser(String user_id, String token) {
         User user = userMapper.selectById(user_id);
         Map<String, String> map = new HashMap<String, String>();

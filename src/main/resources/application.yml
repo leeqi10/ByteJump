@@ -4,6 +4,8 @@ mybatis-plus:
 server:
   port: 8084
 spring:
+  cache:
+    type: redis
   #文件大小设置
   servlet:
     multipart:
